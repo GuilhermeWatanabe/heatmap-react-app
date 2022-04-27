@@ -1,0 +1,21 @@
+.stock {
+  border: 3px solid white;
+  color: white;
+  display: flex;
+  flex-flow: column;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  justify-content: center;
+
+  &:hover {
+    border-color: #2962ff;
+
+  }
+
+  p {
+    height: 100%;
+    text-align: center;
+    width: 100%;
+  }
+}
