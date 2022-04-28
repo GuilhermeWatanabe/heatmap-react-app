@@ -39,4 +39,26 @@ export default class StocksHelper {
 
 		return [height, width];
 	}
+
+	public static defineColor(value: number|null):string {
+		if(value === null) {
+			return 'white';
+		}
+		switch (true) {
+		case (value <= -3):
+			return ('rgb(153, 31, 41)');
+		case (value <= -2):
+			return ('rgb(242, 54, 69)');
+		case (value <= -1):
+			return ('rgb(247, 124, 128)');
+		case (value >= 3):
+			return ('rgb(5, 102, 54)');
+		case (value >= 2):
+			return ('rgb(8, 153, 80)');
+		case (value >= 1):
+			return ('rgb(66, 189, 127)');
+		default:
+			return ('rgb(193, 196, 205)');
+		}
+	}
 }

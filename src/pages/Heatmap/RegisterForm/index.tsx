@@ -1,4 +1,3 @@
-import { placeholder } from '@babel/types';
 import axios from 'axios';
 import { IStock } from 'interfaces/IStock';
 import { useState } from 'react';
@@ -16,16 +15,16 @@ export default function RegisterForm(props: Props) {
 	const [volume, setVolume] = useState<number>(0);
 
 	function storeStock(e: React.FormEvent<HTMLFormElement>): void {
-		//e.preventDefault();
-		axios.post('https://62683b4a01dab900f1cb8963.mockapi.io/stock', {
+		e.preventDefault();
+		axios.post('http://127.0.0.1:8000/api/stocks', {
 			name: name,
 			value: value,
 			volume: volume
 		})
 			.then((res) => {
-				//setStocks([...stocks, res.data]);
-			})
-			.catch((res) => console.log(res));
+				setStocks([...stocks, res.data]);
+				window.location.reload();
+			});
 	}
 
 	return (

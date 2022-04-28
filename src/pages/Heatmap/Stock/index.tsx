@@ -1,9 +1,10 @@
+import axios from 'axios';
 import StocksHelper from 'helpers/StocksHelper';
 import { useEffect, useState } from 'react';
 import styles from './Stock.module.scss';
 
 interface Props {
-  id: string,
+  id: number,
   name: string,
   value: number,
   volume: number,
@@ -22,48 +23,26 @@ export default function Stock(props: Props) {
 		width: width + 'px'
 	};
 
-	function colorSwitch(value: number): void {
-		switch (true) {
-		case (value <= -3):
-			setBackground('rgb(153, 31, 41)');
-			break;
-		case (value <= -2):
-			setBackground('rgb(242, 54, 69)');
-			break;
-		case (value <= -1):
-			setBackground('rgb(247, 124, 128)');
-			break;
-		case (value >= 3):
-			setBackground('rgb(5, 102, 54)');
-			break;
-		case (value >= 2):
-			setBackground('rgb(8, 153, 80)');
-			break;
-		case (value >= 1):
-			setBackground('rgb(66, 189, 127)');
-			break;
-		default:
-			setBackground('rgb(193, 196, 205)');
-		}
+	function deleteStock(): void {
+		axios.delete(`http://127.0.0.1:8000/api/stocks/${id}`)
+			.then(() => {
+				window.location.reload();
+			});
 	}
-
-	//function deleteStock(id: number): void {
-	//	axios.delete(`http://127.0.0.1:8000/api/stocks/${id}`)
-	//		.then(() => {
-	//			const list = stocks.filter(s => s.id !== id);
-	//			setStocks([...list]);
-	//		});
-	//}
 
 	useEffect(() => {
 		const [h, w] = stocksHelper.createTheBoxes(volume);
 		setHeight(h);
 		setWidth(w);
-		colorSwitch(value);
+		setBackground(StocksHelper.defineColor(value));
 	}, []);
 
 	return (
-		<div className={styles.stock} style={style} >
+		<div 
+			className={styles.stock} 
+			style={style} 
+			onDoubleClick={deleteStock} 
+		>
 			<p>{name}</p>
 			<p>{value}</p>
 		</div>
