@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import styles from './Stock.module.scss';
 
 interface Props {
-	id: number,
-	name: string,
-	value: number,
-	volume: number,
+  id: string,
+  name: string,
+  value: number,
+  volume: number,
   stocksHelper: StocksHelper,
 }
 
@@ -33,22 +33,30 @@ export default function Stock(props: Props) {
 		case (value <= -1):
 			setBackground('rgb(247, 124, 128)');
 			break;
-		case (value >= 1):
-			setBackground('rgb(66, 189, 127)');
+		case (value >= 3):
+			setBackground('rgb(5, 102, 54)');
 			break;
 		case (value >= 2):
 			setBackground('rgb(8, 153, 80)');
 			break;
-		case (value >= 3):
-			setBackground('rgb(5, 102, 54)');
+		case (value >= 1):
+			setBackground('rgb(66, 189, 127)');
 			break;
 		default:
 			setBackground('rgb(193, 196, 205)');
 		}
 	}
 
+	//function deleteStock(id: number): void {
+	//	axios.delete(`http://127.0.0.1:8000/api/stocks/${id}`)
+	//		.then(() => {
+	//			const list = stocks.filter(s => s.id !== id);
+	//			setStocks([...list]);
+	//		});
+	//}
+
 	useEffect(() => {
-		const [h, w] =stocksHelper.createTheBoxes(volume);
+		const [h, w] = stocksHelper.createTheBoxes(volume);
 		setHeight(h);
 		setWidth(w);
 		colorSwitch(value);

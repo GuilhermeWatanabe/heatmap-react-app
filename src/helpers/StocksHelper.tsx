@@ -7,7 +7,7 @@ export default class StocksHelper {
 	private remainigHeight: number;
 	private remainigLenght: number;
 
-	constructor(private stocks: IStock[], private resetMap: boolean = false) {
+	constructor(private stocks: IStock[]) {
 		this.stocksTotalArea = this.sumTheAreaOfAllStocks();
 		this.proportionalityCoefficient = this.getProportionalityCoefficient();
 		this.remainigHeight = StockPanelSize.HEIGHT;
