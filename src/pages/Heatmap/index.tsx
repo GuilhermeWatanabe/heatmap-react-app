@@ -3,47 +3,63 @@ import styles from './Heatmap.module.scss';
 import Stock from './Stock';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import http from 'http';
 import StocksHelper from 'helpers/StocksHelper';
 
 export default function Heatmap() {
 	//const [stocks, setStocks] = useState<IStock[]>([]);
+	const [newStock, setNewStock] = useState<string>('');
 	const stocks: IStock[] = [
 		{
 			id: 1,
-			name: 'example 1',
+			name: 'aaaaa',
 			value: -5,
-			volume: 1000
+			volume: 9588
 		},
 		{
 			id: 2,
-			name: 'example 2',
+			name: 'bbbbb',
 			value: -2.1,
-			volume: 150
+			volume: 4939
 		},
 		{
 			id: 3,
-			name: 'example 3',
+			name: 'ccccc',
 			value: -1.1,
-			volume: 5000
+			volume: 4901
 		},
 		{
 			id: 4,
-			name: 'example 2',
+			name: 'ddddd',
 			value: 5,
-			volume: 300
+			volume: 1638
 		},
-		{
-			id: 5,
-			name: 'example 2',
-			value: 1.5,
-			volume: 2200
-		},
-  ];
-  let stocksHelper: StocksHelper = new StocksHelper(stocks);
+	];
+	const stocksHelper: StocksHelper = new StocksHelper(stocks);
+
+	//function deleteStock(id: number): void {
+	//	axios.delete(`http://127.0.0.1:8000/api/stocks/${id}`)
+	//		.then(() => {
+	//			const list = stocks.filter(s => s.id !== id);
+	//			setStocks([...list]);
+	//		});
+	//}
+
+	function storeStock(e: React.FormEvent<HTMLFormElement>): void {
+		e.preventDefault();
+		axios.post('http://127.0.0.1:8000/api/stocks', {
+			name: newStock,
+			value: 100,
+			volume: 1000
+		})
+			.then((res) => {
+				setStocks([...stocks, res.data]);
+				alert('Cadastrdo.');
+			});
+
+	}
 
 	useEffect(() => {
-		//axios.get('https://62683b4a01dab900f1cb8963.mockapi.io/stock')
+		//axios.get<IStock[]>('http://127.0.0.1:8000/api/stocks')
 		//	.then(res => setStocks(res.data));
 	}, []);
 
@@ -57,6 +73,10 @@ export default function Heatmap() {
 						stocksHelper={stocksHelper}
 					/>
 				))}
+			<form onSubmit={(e) => storeStock(e)}>
+				<input type="text" onChange={e => setNewStock(e.target.value)} />
+				<button type='submit'>Cadastrar</button>
+			</form>
 		</main>
 	);
 }
