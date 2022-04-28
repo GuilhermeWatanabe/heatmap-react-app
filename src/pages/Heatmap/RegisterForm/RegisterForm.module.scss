@@ -1,0 +1,51 @@
+@import 'styles/variables';
+
+@mixin input-buttom-sizes {
+  border-radius: .25em;
+  font-size: 1em;
+  line-height: 1.5em;
+  padding: .5em;
+  transition: .3s;
+}
+
+.form {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  fieldset {
+    border: none;
+    display: flex;
+    flex-flow: column;
+    height: 50%;
+    justify-content: space-evenly;
+    text-align: center;
+
+    input {
+      @include input-buttom-sizes();
+      border: 1px solid #ced4da;
+
+      &:focus {
+        border: 1px solid $default-blue;
+        box-shadow: 0 0 0 0.2em rgb(0 123 255 / 25%);
+        outline: none;
+      }
+    }
+
+    button {
+      @include input-buttom-sizes();
+      background-color: white;
+      border: 1px solid $default-blue;
+      color: $default-blue;
+
+      &:hover {
+        background-color: $default-blue;
+        color: white;
+      }
+    }
+  }
+}
+
+.title {
+  font-size: 1.5em;
+}

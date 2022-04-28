@@ -4,10 +4,10 @@ import Stock from './Stock';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import StocksHelper from 'helpers/StocksHelper';
+import RegisterForm from './RegisterForm';
 
 export default function Heatmap() {
 	//const [stocks, setStocks] = useState<IStock[]>([]);
-	const [newStock, setNewStock] = useState<string>('');
 	const stocks: IStock[] = [
 		{
 			id: 1,
@@ -44,19 +44,6 @@ export default function Heatmap() {
 	//		});
 	//}
 
-	function storeStock(e: React.FormEvent<HTMLFormElement>): void {
-		e.preventDefault();
-		axios.post('http://127.0.0.1:8000/api/stocks', {
-			name: newStock,
-			value: 100,
-			volume: 1000
-		})
-			.then((res) => {
-				setStocks([...stocks, res.data]);
-				alert('Cadastrdo.');
-			});
-
-	}
 
 	useEffect(() => {
 		//axios.get<IStock[]>('http://127.0.0.1:8000/api/stocks')
@@ -64,19 +51,18 @@ export default function Heatmap() {
 	}, []);
 
 	return (
-		<main className={styles.heatmap}>
-			{stocks.sort((a, b) => (b.volume - a.volume))
-				.map(stock => (
-					<Stock
-						key={stock.id}
-						{...stock}
-						stocksHelper={stocksHelper}
-					/>
-				))}
-			<form onSubmit={(e) => storeStock(e)}>
-				<input type="text" onChange={e => setNewStock(e.target.value)} />
-				<button type='submit'>Cadastrar</button>
-			</form>
+		<main className={styles.main}>
+			<RegisterForm />
+			<div className={styles.heatmap}>
+				{stocks.sort((a, b) => (b.volume - a.volume))
+					.map(stock => (
+						<Stock
+							key={stock.id}
+							{...stock}
+							stocksHelper={stocksHelper}
+						/>
+					))}
+			</div>
 		</main>
 	);
 }
